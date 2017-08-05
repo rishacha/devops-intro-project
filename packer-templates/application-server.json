@@ -1,7 +1,7 @@
 {
   "variables": {
       "PACKER_OS_FLAVOUR": "ubuntu",
-      "PACKER_BOX_NAME": "ubuntu-14.04.4-server-amd64",
+      "PACKER_BOX_NAME": "ubuntu-16.04.3-server-amd64",
       "AWS_ACCESS_KEY_ID": "{{env `AWS_ACCESS_KEY_ID`}}",
       "AWS_SECRET_ACCESS_KEY": "{{env `AWS_SECRET_ACCESS_KEY`}}",
       "DIGITALOCEAN_API_TOKEN": "{{env `DIGITALOCEAN_API_TOKEN`}}"
@@ -10,9 +10,10 @@
       {
         "type": "virtualbox-iso",
         "boot_command": [
-          "<esc><wait>",
-          "<esc><wait>",
-          "<enter><wait>",
+          "<enter><wait><f6><esc><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+          "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
           "/install/vmlinuz<wait>",
           " auto<wait>",
           " console-setup/ask_detect=false<wait>",
@@ -28,8 +29,9 @@
           " locale=en_US<wait>",
           " netcfg/get_domain=vm<wait>",
           " netcfg/get_hostname=vagrant<wait>",
+          " grub-installer/bootdev=/dev/sda<wait>",
           " noapic<wait>",
-          " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg<wait>",
+          " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg",
           " -- <wait>",
           "<enter><wait>"
         ],
@@ -39,9 +41,12 @@
         "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
         "guest_os_type": "Ubuntu_64",
         "http_directory": "http",
-        "iso_checksum": "07e4bb5569814eab41fafac882ba127893e3ff0bdb7ec931c9b2d040e3e94e7a",
+        "iso_checksum": "a06cd926f5855d4f21fb4bc9978a35312f815fbda0d0ef7fdc846861f4fc4600",
         "iso_checksum_type": "sha256",
-        "iso_url": "http://releases.ubuntu.com/trusty/{{ user `PACKER_BOX_NAME` }}.iso",
+        "iso_urls": [
+          "iso/ubuntu-16.04.3-server-amd64.iso",
+          "http://releases.ubuntu.com/16.04.3/ubuntu-16.04.3-server-amd64.iso"
+        ],
         "shutdown_command": "echo 'vagrant'|sudo -S shutdown -P now",
         "ssh_password": "vagrant",
         "ssh_port": 22,
