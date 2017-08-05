@@ -1,4 +1,6 @@
 .DS_Store
 packer_cache
-packer-templates/virtualbox/
+!packer-templates/virtualbox/
+packer-templates/virtualbox/*
+!packer-templates/virtualbox/Vagrantfile
 devops-kungfu/
